@@ -5,32 +5,42 @@ const rl = readline.createInterface({
 });
 
 let todoList = [];
-// let todoTitle;
-// let todoDescp;
-// let moreAdd = "Yes";
-let i = 0;
-while(i < 2){
-    var work = {
-        title : "",
-        description : "",
-        date : new Date(),
-    };
-    todoList.push(work);
-    rl.question("Add Title : ", function (para) {
-        todoList[i]["title"] = para;
-        rl.close();
+
+function getUserInput() {
+    console.log("Enter Your Choice given below: ");
+    console.log("Enter 1 for Adding Task. \nEnter 2 for display todo List. \nEnter 0 for exit.");
+
+    rl.question("Enter a NUmber : ", function (num) {
+        let input = parseInt(num);
+        performTask(input);
     });
-    rl.question("Add Description : ", function (para) {
-        todoList[i]["description"] = para;
-        rl.close();
-    });
-    
-    // rl.question("Want to add more Yes or No: ", function (para) {
-    //     moreAdd = para;
-    //     if(moreAdd === "No") exit;
-    //     rl.close();
-    // });
-    i++;
 }
 
-// console.log(todoList);
+function performTask(input) {
+    switch(input){
+        case 0: {
+            rl.close();
+            break;
+        }
+        case 1: {
+            rl.question("Add Title : ", function(t) {
+                rl.question("Add Description : ", function(d){
+                    let obj = {
+                        title: t,
+                        description: d,
+                        date: new Date(),
+                    }
+                    todoList.push(obj);
+                    getUserInput();
+                });
+            });
+            break;
+        }
+        case 2: {
+            console.log(todoList);
+            getUserInput();
+            break;
+        }
+    }
+}
+getUserInput();
